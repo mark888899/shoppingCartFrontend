@@ -10,7 +10,10 @@
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text">{{ product.description }}</p>
               <p class="card-text"><strong>價格: {{ product.price }} 元</strong></p>
-              <router-link :to="'/product/' + product.id" class="btn btn-primary">查看詳情</router-link>
+              <div class="d-flex justify-content-between">
+                <router-link :to="'/product/' + product.id" class="btn btn-primary">查看詳情</router-link>
+                <button class="btn btn-success" @click="addToCart(product.id)">新增到購物車</button>
+              </div>
             </div>
           </div>
         </div>
@@ -43,7 +46,30 @@
     methods: {
       getImageUrl(imageName) {
         return `/images/${imageName}`; // 讀取 public/images/ 下的圖片
+      },
+      
+      async addToCart(productId) {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("請先登入");
+          this.$router.push("/login");
+          return;
+        }
+
+        const response = await axios.post("http://localhost:8080/cart/add", 
+          { productId, quantity: 1 }, // 預設加入 1 件商品
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        alert(response.data); // 顯示成功訊息
+      } catch (error) {
+        console.error("加入購物車失敗:", error);
+        alert("加入購物車失敗，請稍後再試");
       }
+    }
     }
   };
   </script>
