@@ -17,9 +17,18 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/order">訂單</router-link>
             </li>
-            <li class="nav-item">
-              <router-link v-if="!user.username" class="nav-link" to="/login">登入</router-link>
-              <span v-else class="nav-link">{{ user.username }}</span>
+            <li class="nav-item dropdown" v-if="user.username">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                {{ user.username }}
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <button class="dropdown-item" @click="logout">登出</button>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item" v-else>
+              <router-link class="nav-link" to="/login">登入</router-link>
             </li>
           </ul>
         </div>
@@ -32,26 +41,65 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return {
       user: {
-        username: localStorage.getItem('username') || ''
-      }
+        username: localStorage.getItem("username") || "",
+      },
     };
   },
   methods: {
     updateUser() {
-      this.user.username = localStorage.getItem('username') || '';
-    }
+      this.user.username = localStorage.getItem("username") || "";
+    },
+    async logout() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("未登入");
+          return;
+        }
+
+        await axios.post("http://localhost:8080/auth/logout", {}, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // 清除 localStorage
+        localStorage.removeItem("username");
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+
+        // 更新 UI
+        this.updateUser();
+        alert("登出成功");
+
+        // 重新導向到首頁
+        this.$router.push("/");
+      } catch (error) {
+        console.error("登出失敗:", error);
+        alert("登出失敗，請稍後再試");
+      }
+    },
   },
   mounted() {
     this.updateUser();
-    window.addEventListener('storage', this.updateUser);
+    window.addEventListener("storage", this.updateUser);
   },
   beforeUnmount() {
-    window.removeEventListener('storage', this.updateUser);
-  }
+    window.removeEventListener("storage", this.updateUser);
+  },
 };
 </script>
+
+<style>
+/* 確保 Bootstrap 下拉選單顯示正確 */
+.dropdown-menu {
+  min-width: 100px;
+}
+</style>
