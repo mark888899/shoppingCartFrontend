@@ -1,5 +1,4 @@
 <template>
-  <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="#">Shopping Frontend</a>
@@ -25,33 +24,35 @@
         </div>
       </div>
     </nav>
-    <div class="container mt-4">
-      <router-view></router-view>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'App',
-  data() {
-    return {
-      user: {
-        username: localStorage.getItem('username') || ''
+  </template>
+  
+  <script>
+  export default {
+    name: "Navbar",
+    data() {
+      return {
+        user: {
+          username: localStorage.getItem("username") || ""
+        }
+      };
+    },
+    mounted() {
+      window.addEventListener("storage", this.updateUser);
+    },
+    beforeUnmount() {
+      window.removeEventListener("storage", this.updateUser);
+    },
+    methods: {
+      updateUser() {
+        this.user.username = localStorage.getItem("username") || "";
       }
-    };
-  },
-  methods: {
-    updateUser() {
-      this.user.username = localStorage.getItem('username') || '';
     }
-  },
-  mounted() {
-    this.updateUser();
-    window.addEventListener('storage', this.updateUser);
-  },
-  beforeUnmount() {
-    window.removeEventListener('storage', this.updateUser);
+  };
+  </script>
+  
+  <style>
+  .navbar {
+    margin-bottom: 20px;
   }
-};
-</script>
+  </style>
+  
