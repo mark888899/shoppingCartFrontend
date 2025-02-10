@@ -23,7 +23,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li v-if="user.role==='1'">
-                  <<router-link class="dropdown-item" to="productManage">編輯商品</router-link>
+                  <router-link class="dropdown-item" to="productManage">編輯商品</router-link>
                 </li>
                 <li>
                   <button class="dropdown-item" @click="logout">登出</button>
