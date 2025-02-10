@@ -102,8 +102,13 @@ export default {
         }
 
       } catch (error) {
-        console.error("獲取訂單失敗:", error);
-        alert("無法獲取訂單，請稍後再試");
+        if (error.response && error.response.data === "該用戶查無訂單") {
+          console.warn("該用戶查無訂單");
+          this.orders = []; // 清空訂單，但不彈出 alert
+        } else {
+          console.error("獲取訂單失敗:", error);
+          alert("無法獲取訂單，請稍後再試");
+        }
       }
     },
     toggleOrderDetails(orderId) {
