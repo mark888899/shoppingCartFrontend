@@ -49,27 +49,27 @@
       },
       
       async addToCart(productId) {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          alert("請先登入");
-          this.$router.push("/login");
-          return;
-        }
-
-        const response = await axios.post("http://localhost:8080/cart/add", 
-          { productId, quantity: 1 }, // 預設加入 1 件商品
-          {
-            headers: { Authorization: `Bearer ${token}` },
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            alert("請先登入");
+            this.$router.push("/login");
+            return;
           }
-        );
 
-        alert(response.data); // 顯示成功訊息
-      } catch (error) {
-        console.error("加入購物車失敗:", error);
-        alert("加入購物車失敗，請稍後再試");
+          const response = await axios.post("http://localhost:8080/cart/add", 
+            { productId, quantity: 1 }, // 預設加入 1 件商品
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          alert(response.data); // 顯示成功訊息
+        } catch (error) {
+          console.error("加入購物車失敗:", error);
+          alert("加入購物車失敗，請稍後再試");
+        }
       }
-    }
     }
   };
   </script>

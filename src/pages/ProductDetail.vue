@@ -6,7 +6,7 @@
     <p><strong>描述:</strong> {{ product.description }}</p>
     <p><strong>價格:</strong> {{ product.price }} 元</p>
     <p><strong>庫存:</strong> {{ product.stock }}</p>
-    <p><strong>類別:</strong> {{ product.category }}</p>
+    <p><strong>類別:</strong> {{ product.category?.name || "未分類"}}</p>
     <p><strong>品牌:</strong> {{ product.brand }}</p>
 
     <!-- 數量選擇區 -->
@@ -42,6 +42,7 @@ export default {
         const productId = this.$route.params.id;
         const response = await axios.get(`http://localhost:8080/products/${productId}`);
         this.product = response.data;
+        console.log(this.product);
       } catch (error) {
         console.error("獲取商品詳情失敗:", error);
       }
