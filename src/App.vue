@@ -22,6 +22,9 @@
                 {{ user.username }}
               </a>
               <ul class="dropdown-menu">
+                <li v-if="user.role==='1'">
+                  <<router-link class="dropdown-item" to="productManage">編輯商品</router-link>
+                </li>
                 <li>
                   <button class="dropdown-item" @click="logout">登出</button>
                 </li>
@@ -49,12 +52,14 @@ export default {
     return {
       user: {
         username: localStorage.getItem("username") || "",
+        role: localStorage.getItem("role") || "",
       },
     };
   },
   methods: {
     updateUser() {
       this.user.username = localStorage.getItem("username") || "";
+      this.user.role = localStorage.getItem("role") || "";
     },
     async logout() {
       try {
@@ -74,6 +79,7 @@ export default {
         localStorage.removeItem("username");
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
+        localStorage.removeItem("role");
 
         // 更新 UI
         this.updateUser();

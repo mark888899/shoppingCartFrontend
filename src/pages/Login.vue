@@ -35,7 +35,7 @@ export default {
           localStorage.setItem('username', userData.username);
           localStorage.setItem('userId', userData.id);
           localStorage.setItem('token', userData.token); //  儲存 JWT Token
-          console.log(localStorage.getItem('token'));
+          localStorage.setItem('role',userData.role);
           this.$root.updateUser(); // 更新 Navbar
           alert(userData.message);
           this.$router.push('/');

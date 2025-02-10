@@ -4,6 +4,8 @@ import App from './App.vue';
 import Home from './pages/Home.vue';
 import ProductDetail from './pages/ProductDetail.vue';
 import ProductList from './pages/ProductList.vue';
+import ProductManage from './pages/ProductManage.vue';
+import ProductUpdate from './pages/ProductUpdate.vue';
 import Cart from './pages/Cart.vue';
 import Order from './pages/Order.vue';
 import Login from './pages/Login.vue';
@@ -29,11 +31,14 @@ const routes = [
   { path: '/', component: Home },
   { path: '/product/:id', component: ProductDetail },
   { path: '/productlist', component: ProductList }, 
+  { path: '/productmanage', component: ProductManage }, 
+  { path: '/productupdate/:id?', component: ProductUpdate },  // `:id?` 允許 id 可選
   { path: '/cart', component: Cart },
   { path: '/order', component: Order },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
 ];
+
 
 const router = createRouter({
   history: createWebHashHistory(),
