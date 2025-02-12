@@ -96,21 +96,28 @@ export default {
     },
     async saveProduct() {
       try {
+        const headers = {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "X-USER-ROLE": localStorage.getItem("role") || "GUEST", // ✅ 確保帶入角色
+        };
+
         if (this.isEdit) {
           // 更新商品
-          await axios.put("http://localhost:8080/products/maintenance/update", this.product);
+          await axios.put("http://localhost:8080/products/maintenance/update", this.product, { headers });
           alert("商品更新成功");
         } else {
           // 新增商品
-          await axios.post("http://localhost:8080/products/maintenance/add", this.product);
+          await axios.post("http://localhost:8080/products/maintenance/add", this.product, { headers });
           alert("商品新增成功");
         }
+
         this.$router.push("/productmanage");
       } catch (error) {
         console.error("儲存商品失敗:", error);
         alert("儲存商品失敗，請稍後再試");
       }
-    },
+    }
+
   },
   mounted() {
     this.fetchCategories(); // 取得類別

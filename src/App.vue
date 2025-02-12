@@ -22,7 +22,7 @@
                 {{ user.username }}
               </a>
               <ul class="dropdown-menu">
-                <li v-if="user.role==='1'">
+                <li v-if="user.role=='ADMIN'">
                   <router-link class="dropdown-item" to="productManage">編輯商品</router-link>
                 </li>
                 <li>
@@ -80,7 +80,7 @@ export default {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("role");
-
+        
         // 更新 UI
         this.updateUser();
         alert("登出成功");

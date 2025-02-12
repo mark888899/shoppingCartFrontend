@@ -53,11 +53,16 @@
     methods: {
       checkUserRole() {
         const role = localStorage.getItem("role");
-        this.isAdmin = role === "1";
+        this.isAdmin = role === "ADMIN";
       },
       async fetchProducts() {
         try {
-          const response = await axios.get("http://localhost:8080/products/available");
+          const response = await axios.get("http://localhost:8080/products/available", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "X-USER-ROLE": localStorage.getItem("role") || "GUEST", // 確保帶入角色
+            },
+          });
           this.products = response.data;
         } catch (error) {
           console.error("獲取商品列表失敗:", error);
@@ -69,18 +74,24 @@
     goToUpdateProduct(productId) {
       this.$router.push(`/productupdate/${productId}`); // 更新商品
     },
-      async deleteProduct(productId) {
-        if (confirm("確定要刪除此商品嗎？")) {
-          try {
-            await axios.delete(`http://localhost:8080/products/${productId}`);
-            alert("商品刪除成功");
-            this.fetchProducts(); // 重新載入商品列表
-          } catch (error) {
-            console.error("刪除商品失敗:", error);
-            alert("刪除商品失敗，請稍後再試");
-          }
+    async deleteProduct(productId) {
+      if (confirm("確定要刪除此商品嗎？")) {
+        try {
+          await axios.delete(`http://localhost:8080/products/maintenance/${productId}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "X-USER-ROLE": localStorage.getItem("role") || "GUEST",
+            },
+          });
+          alert("商品刪除成功");
+          this.fetchProducts(); // 重新載入商品列表
+        } catch (error) {
+          console.error("刪除商品失敗:", error);
+          alert("刪除商品失敗，請稍後再試");
         }
-      },
+      }
+    },
+
     },
     mounted() {
       this.checkUserRole();

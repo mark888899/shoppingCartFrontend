@@ -75,7 +75,8 @@ export default {
 
         await axios.post("http://localhost:8080/cart/add", 
           { productId: this.product.id, quantity: this.quantity }, 
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` 
+            ,"X-USER-ROLE": localStorage.getItem('role')} }
         );
 
         alert("商品已加入購物車");

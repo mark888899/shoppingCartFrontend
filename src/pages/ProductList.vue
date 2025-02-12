@@ -60,7 +60,7 @@
           const response = await axios.post("http://localhost:8080/cart/add", 
             { productId, quantity: 1 }, // 預設加入 1 件商品
             {
-              headers: { Authorization: `Bearer ${token}` },
+              headers: { Authorization: `Bearer ${token}`,"X-USER-ROLE": localStorage.getItem('role') },
             }
           );
 

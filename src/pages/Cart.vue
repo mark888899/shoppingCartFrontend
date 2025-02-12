@@ -64,6 +64,7 @@ export default {
         const response = await axios.get("http://localhost:8080/cart/items", {
           headers: {
             Authorization: `Bearer ${token}`, 
+            "X-USER-ROLE": localStorage.getItem('role'),
           },
         });
 
@@ -89,6 +90,7 @@ export default {
         await axios.delete(`http://localhost:8080/cart/remove/${cartId}`, {
           headers: {
             Authorization: `Bearer ${token}`, 
+            "X-USER-ROLE": localStorage.getItem('role'),
           },
         });
 
@@ -114,6 +116,7 @@ export default {
           {
             headers: {
               Authorization: `Bearer ${token}`, 
+              "X-USER-ROLE": localStorage.getItem('role'),
             },
           }
         );
