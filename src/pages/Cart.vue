@@ -17,7 +17,12 @@
         </thead>
         <tbody>
           <tr v-for="item in cart" :key="item.id">
-            <td>{{ item.productName }}</td>
+            <!-- 商品名稱改為超連結，點擊後跳轉到商品詳情頁面 -->
+            <td>
+              <router-link :to="'/product/' + item.productId" class="product-link">
+                {{ item.productName }}
+              </router-link>
+            </td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.price.toFixed(2) }}</td>
             <td>{{ (item.quantity * item.price).toFixed(2) }}</td>
@@ -57,7 +62,7 @@ export default {
         const token = localStorage.getItem("token");
         if (!token) {
           alert("請先登入");
-          this.$router.push("/login"); // 🔹 跳轉到登入頁面
+          this.$router.push("/login"); 
           return;
         }
 
@@ -78,14 +83,12 @@ export default {
         const token = localStorage.getItem("token");
         if (!token) {
           alert("請先登入");
-          this.$router.push("/login"); // 🔹 跳轉到登入頁面
+          this.$router.push("/login"); 
           return;
         }
 
-            // **從購物車內找到對應 cartId 的商品**
         const cartItem = this.cart.find(item => item.id === cartId);
-        const productName = cartItem ? cartItem.productName : "該商品"; // 若找不到，預設值為 "該商品"
-
+        const productName = cartItem ? cartItem.productName : "該商品"; 
 
         await axios.delete(`http://localhost:8080/cart/remove/${cartId}`, {
           headers: {
@@ -106,7 +109,7 @@ export default {
         const token = localStorage.getItem("token");
         if (!token) {
           alert("請先登入");
-          this.$router.push("/login"); // 🔹 跳轉到登入頁面
+          this.$router.push("/login"); 
           return;
         }
 
@@ -121,9 +124,9 @@ export default {
           }
         );
 
-        alert("已成功建立訂單"); // 顯示結帳成功訊息
-        this.cart = []; // 清空購物車
-        this.$router.push("/order"); // 跳轉到訂單頁面
+        alert("已成功建立訂單");
+        this.cart = []; 
+        this.$router.push("/order"); 
       } catch (error) {
         console.error("結帳失敗:", error);
         alert("結帳失敗，請稍後再試");
@@ -181,5 +184,12 @@ export default {
   text-align: center;
   font-size: 18px;
   color: gray;
+}
+.product-link {
+  color: blue;
+  text-decoration: none;
+}
+.product-link:hover {
+  text-decoration: underline;
 }
 </style>
