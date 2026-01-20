@@ -91,6 +91,7 @@ export default {
         const productName = cartItem ? cartItem.productName : "該商品"; 
 
         await axios.delete(`http://localhost:8080/cart/remove/${cartId}`, {
+
           headers: {
             Authorization: `Bearer ${token}`, 
             "X-USER-ROLE": localStorage.getItem('role'),
