@@ -57,7 +57,7 @@
       },
       async fetchProducts() {
         try {
-          const response = await axios.get("http://localhost:8080/products/available", {
+          const response = await axios.get("/products/available", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
               "X-USER-ROLE": localStorage.getItem("role") || "GUEST", // 確保帶入角色
@@ -77,7 +77,7 @@
     async deleteProduct(productId) {
       if (confirm("確定要刪除此商品嗎？")) {
         try {
-          await axios.delete(`http://localhost:8080/products/maintenance/${productId}`, {
+          await axios.delete(`/products/maintenance/${productId}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
               "X-USER-ROLE": localStorage.getItem("role") || "GUEST",
@@ -118,4 +118,3 @@
     margin: 10px;
   }
   </style>
-  

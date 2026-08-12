@@ -57,7 +57,7 @@
             return;
           }
 
-          const response = await axios.post("http://localhost:8080/cart/add", 
+          const response = await axios.post("/cart/add",
             { productId, quantity: 1 }, // 預設加入 1 件商品
             {
               headers: { Authorization: `Bearer ${token}`,"X-USER-ROLE": localStorage.getItem('role') },
@@ -80,4 +80,3 @@
     object-fit: cover;
   }
   </style>
-  

@@ -40,7 +40,7 @@ export default {
     async fetchProduct() {
       try {
         const productId = this.$route.params.id;
-        const response = await axios.get(`http://localhost:8080/products/${productId}`);
+        const response = await axios.get(`/products/${productId}`);
         this.product = response.data;
         console.log(this.product);
       } catch (error) {
@@ -73,7 +73,7 @@ export default {
           return;
         }
 
-        await axios.post("http://localhost:8080/cart/add", 
+        await axios.post("/cart/add",
           { productId: this.product.id, quantity: this.quantity }, 
           { headers: { Authorization: `Bearer ${token}` 
             ,"X-USER-ROLE": localStorage.getItem('role')} }

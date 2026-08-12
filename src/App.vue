@@ -69,7 +69,7 @@ export default {
           return;
         }
 
-        await axios.post("http://localhost:8080/auth/logout", {}, {
+        await axios.post("/auth/logout", {}, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

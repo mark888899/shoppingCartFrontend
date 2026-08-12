@@ -66,7 +66,7 @@ export default {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/cart/items", {
+        const response = await axios.get("/cart/items", {
           headers: {
             Authorization: `Bearer ${token}`, 
             "X-USER-ROLE": localStorage.getItem('role'),
@@ -90,7 +90,7 @@ export default {
         const cartItem = this.cart.find(item => item.id === cartId);
         const productName = cartItem ? cartItem.productName : "該商品"; 
 
-        await axios.delete(`http://localhost:8080/cart/remove/${cartId}`, {
+        await axios.delete(`/cart/remove/${cartId}`, {
 
           headers: {
             Authorization: `Bearer ${token}`, 
@@ -115,7 +115,7 @@ export default {
         }
 
         const response = await axios.post(
-          "http://localhost:8080/order/checkout",
+          "/order/checkout",
           {},
           {
             headers: {

@@ -88,7 +88,7 @@ export default {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/order/", {
+        const response = await axios.get("/order/", {
           headers: {
             Authorization: `Bearer ${token}`,
             "X-USER-ROLE": localStorage.getItem('role'),

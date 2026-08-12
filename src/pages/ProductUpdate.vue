@@ -77,7 +77,7 @@ export default {
       if (this.$route.params.id) {
         this.isEdit = true;
         try {
-          const response = await axios.get(`http://localhost:8080/products/${this.$route.params.id}`);
+          const response = await axios.get(`/products/${this.$route.params.id}`);
           this.product = response.data;
         } catch (error) {
           console.error("獲取商品資料失敗:", error);
@@ -87,7 +87,7 @@ export default {
     },
     async fetchCategories() {
       try {
-        const response = await axios.get("http://localhost:8080/product/categories/");
+        const response = await axios.get("/product/categories/");
         this.categories = response.data;
       } catch (error) {
         console.error("獲取類別失敗:", error);
@@ -103,11 +103,11 @@ export default {
 
         if (this.isEdit) {
           // 更新商品
-          await axios.put("http://localhost:8080/products/maintenance/update", this.product, { headers });
+          await axios.put("/products/maintenance/update", this.product, { headers });
           alert("商品更新成功");
         } else {
           // 新增商品
-          await axios.post("http://localhost:8080/products/maintenance/add", this.product, { headers });
+          await axios.post("/products/maintenance/add", this.product, { headers });
           alert("商品新增成功");
         }
 

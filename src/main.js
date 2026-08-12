@@ -24,7 +24,7 @@ axios.interceptors.request.use(config => {
 }, error => Promise.reject(error));
 
 // 設置 API 基本 URL
-axios.defaults.baseURL = 'http://localhost:8080/';
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 // 定義路由
 const routes = [
